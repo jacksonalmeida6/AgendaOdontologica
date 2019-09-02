@@ -1,0 +1,60 @@
+﻿@model AgendaOdontologica.Models.Paciente
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Paciente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomePaciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomePaciente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RG)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CPF)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CPF)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereço)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Endereço)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorTratamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorTratamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FormaDePagamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FormaDePagamento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

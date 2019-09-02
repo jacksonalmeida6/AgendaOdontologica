@@ -1,0 +1,48 @@
+﻿@model AgendaOdontologica.Models.Agendamento
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Agendamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraAtendimento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoraAtendimento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TempoAtemdimento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TempoAtemdimento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Dentista)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Dentista.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paciente.NomePaciente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Secretaria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Secretaria.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

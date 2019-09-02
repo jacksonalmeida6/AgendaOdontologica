@@ -1,0 +1,78 @@
+﻿@model AgendaOdontologica.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Funcionario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeFuncionario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomeFuncionario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Funcao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Funcao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataNaci)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataNaci)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataAdmissao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataAdmissao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CPF)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CPF)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PIS)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PIS)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
