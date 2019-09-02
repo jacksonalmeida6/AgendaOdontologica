@@ -24,7 +24,7 @@ namespace AgendaOdontologica.Servicos
             return _agendaOdontologicaDbContext.Especializacaos.ToList();
         }
 
-        public async Task<RedirectToActionResult> Inserir(Secretaria dentista)
+        public async Task<RedirectToActionResult> Inserir(Dentista dentista)
         {
             try
             {

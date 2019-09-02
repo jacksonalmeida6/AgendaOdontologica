@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaOdontologica.Migrations
 {
     [DbContext(typeof(AgendaOdontologicaDbContext))]
-    [Migration("20190901233955_primeiraComIdentity")]
+    [Migration("20190902024932_primeiraComIdentity")]
     partial class primeiraComIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,175 @@ namespace AgendaOdontologica.Migrations
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Agendamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DentistaId");
+
+                    b.Property<DateTime>("HoraAtendimento");
+
+                    b.Property<int>("PacienteId");
+
+                    b.Property<int>("SecretariaId");
+
+                    b.Property<DateTime>("TempoAtemdimento");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DentistaId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("SecretariaId");
+
+                    b.ToTable("Agendamentooes");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Dentista", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CEP");
+
+                    b.Property<string>("CPF")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DataAdmissao");
+
+                    b.Property<DateTime>("DataNaci");
+
+                    b.Property<string>("Endereco")
+                        .IsRequired();
+
+                    b.Property<int>("EspecializacaoId");
+
+                    b.Property<string>("Login")
+                        .IsRequired();
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<string>("PIS")
+                        .IsRequired();
+
+                    b.Property<string>("Senha")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EspecializacaoId");
+
+                    b.ToTable("Dentistas");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Especializacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Especialidade");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Especializacaos");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Funcionario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CEP");
+
+                    b.Property<string>("CPF")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DataAdmissao");
+
+                    b.Property<DateTime>("DataNaci");
+
+                    b.Property<string>("Endereco");
+
+                    b.Property<string>("Funcao")
+                        .IsRequired();
+
+                    b.Property<string>("Login")
+                        .IsRequired();
+
+                    b.Property<string>("NomeFuncionario")
+                        .IsRequired();
+
+                    b.Property<string>("PIS");
+
+                    b.Property<string>("Senha")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Funcionarios");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Paciente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CEP");
+
+                    b.Property<string>("CPF");
+
+                    b.Property<string>("Endereço");
+
+                    b.Property<string>("FormaDePagamento");
+
+                    b.Property<string>("NomePaciente");
+
+                    b.Property<string>("RG");
+
+                    b.Property<double>("ValorTratamento");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pacientes");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.Secretaria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CEP");
+
+                    b.Property<string>("CPF");
+
+                    b.Property<DateTime>("DataAdmissao");
+
+                    b.Property<DateTime>("DataNaci");
+
+                    b.Property<string>("Endereco");
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Nome");
+
+                    b.Property<string>("PIS");
+
+                    b.Property<string>("Senha");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Secretarias");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -191,203 +360,43 @@ namespace AgendaOdontologica.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AgendaOdontologica.Models.Agendamento", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("DentistaId");
-
-                    b.Property<string>("DentistaId1");
-
-                    b.Property<DateTime>("HoraAtendimento");
-
-                    b.Property<int>("PacienteId");
-
-                    b.Property<string>("PacienteId1");
-
-                    b.Property<int>("SecretariaId");
-
-                    b.Property<string>("SecretariaId1");
-
-                    b.Property<DateTime>("TempoAtemdimento");
-
-                    b.HasIndex("DentistaId1");
-
-                    b.HasIndex("PacienteId1");
-
-                    b.HasIndex("SecretariaId1");
-
-                    b.ToTable("Agendamento");
-
-                    b.HasDiscriminator().HasValue("Agendamento");
-                });
-
-            modelBuilder.Entity("AgendaOdontologica.Models.Dentista", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("CEP");
-
-                    b.Property<string>("CPF")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DataAdmissao");
-
-                    b.Property<DateTime>("DataNaci");
-
-                    b.Property<string>("Endereco")
-                        .IsRequired();
-
-                    b.Property<int>("EspecializacaoId");
-
-                    b.Property<string>("EspecializacaoId1");
-
-                    b.Property<string>("Login")
-                        .IsRequired();
-
-                    b.Property<string>("Nome")
-                        .IsRequired();
-
-                    b.Property<string>("PIS")
-                        .IsRequired();
-
-                    b.Property<string>("Senha")
-                        .IsRequired();
-
-                    b.HasIndex("EspecializacaoId1");
-
-                    b.ToTable("Dentista");
-
-                    b.HasDiscriminator().HasValue("Dentista");
-                });
-
-            modelBuilder.Entity("AgendaOdontologica.Models.Especializacao", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("Especialidade");
-
-                    b.ToTable("Especializacao");
-
-                    b.HasDiscriminator().HasValue("Especializacao");
-                });
-
-            modelBuilder.Entity("AgendaOdontologica.Models.Funcionario", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("CEP")
-                        .HasColumnName("Funcionario_CEP");
-
-                    b.Property<string>("CPF")
-                        .IsRequired()
-                        .HasColumnName("Funcionario_CPF");
-
-                    b.Property<DateTime>("DataAdmissao")
-                        .HasColumnName("Funcionario_DataAdmissao");
-
-                    b.Property<DateTime>("DataNaci")
-                        .HasColumnName("Funcionario_DataNaci");
-
-                    b.Property<string>("Endereco")
-                        .HasColumnName("Funcionario_Endereco");
-
-                    b.Property<string>("Funcao")
-                        .IsRequired();
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnName("Funcionario_Login");
-
-                    b.Property<string>("NomeFuncionario")
-                        .IsRequired();
-
-                    b.Property<string>("PIS")
-                        .HasColumnName("Funcionario_PIS");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnName("Funcionario_Senha");
-
-                    b.ToTable("Funcionario");
-
-                    b.HasDiscriminator().HasValue("Funcionario");
-                });
-
             modelBuilder.Entity("AgendaOdontologica.Models.HomeLogin", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Login")
-                        .HasColumnName("HomeLogin_Login");
+                    b.Property<string>("Login");
 
-                    b.Property<string>("Senha")
-                        .HasColumnName("HomeLogin_Senha");
+                    b.Property<string>("Senha");
 
                     b.ToTable("HomeLogin");
 
                     b.HasDiscriminator().HasValue("HomeLogin");
                 });
 
-            modelBuilder.Entity("AgendaOdontologica.Models.Paciente", b =>
+            modelBuilder.Entity("AgendaOdontologica.Models.Agendamento", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("AgendaOdontologica.Models.Secretaria", "Dentista")
+                        .WithMany()
+                        .HasForeignKey("DentistaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<int>("CEP")
-                        .HasColumnName("Paciente_CEP");
+                    b.HasOne("AgendaOdontologica.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Property<string>("CPF")
-                        .HasColumnName("Paciente_CPF");
-
-                    b.Property<string>("Endereço");
-
-                    b.Property<string>("FormaDePagamento");
-
-                    b.Property<string>("NomePaciente");
-
-                    b.Property<string>("RG");
-
-                    b.Property<double>("ValorTratamento");
-
-                    b.ToTable("Paciente");
-
-                    b.HasDiscriminator().HasValue("Paciente");
+                    b.HasOne("AgendaOdontologica.Models.Secretaria", "Secretaria")
+                        .WithMany()
+                        .HasForeignKey("SecretariaId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AgendaOdontologica.Models.Secretaria", b =>
+            modelBuilder.Entity("AgendaOdontologica.Models.Dentista", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("CEP")
-                        .HasColumnName("Secretaria_CEP");
-
-                    b.Property<string>("CPF")
-                        .HasColumnName("Secretaria_CPF");
-
-                    b.Property<DateTime>("DataAdmissao")
-                        .HasColumnName("Secretaria_DataAdmissao");
-
-                    b.Property<DateTime>("DataNaci")
-                        .HasColumnName("Secretaria_DataNaci");
-
-                    b.Property<string>("Endereco")
-                        .HasColumnName("Secretaria_Endereco");
-
-                    b.Property<string>("Login")
-                        .HasColumnName("Secretaria_Login");
-
-                    b.Property<string>("Nome")
-                        .HasColumnName("Secretaria_Nome");
-
-                    b.Property<string>("PIS")
-                        .HasColumnName("Secretaria_PIS");
-
-                    b.Property<string>("Senha")
-                        .HasColumnName("Secretaria_Senha");
-
-                    b.ToTable("Secretaria");
-
-                    b.HasDiscriminator().HasValue("Secretaria");
+                    b.HasOne("AgendaOdontologica.Models.Especializacao", "Especializacao")
+                        .WithMany()
+                        .HasForeignKey("EspecializacaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,28 +442,6 @@ namespace AgendaOdontologica.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("AgendaOdontologica.Models.Agendamento", b =>
-                {
-                    b.HasOne("AgendaOdontologica.Models.Dentista", "Dentista")
-                        .WithMany()
-                        .HasForeignKey("DentistaId1");
-
-                    b.HasOne("AgendaOdontologica.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("PacienteId1");
-
-                    b.HasOne("AgendaOdontologica.Models.Secretaria", "Secretaria")
-                        .WithMany()
-                        .HasForeignKey("SecretariaId1");
-                });
-
-            modelBuilder.Entity("AgendaOdontologica.Models.Dentista", b =>
-                {
-                    b.HasOne("AgendaOdontologica.Models.Especializacao", "Especializacao")
-                        .WithMany()
-                        .HasForeignKey("EspecializacaoId1");
                 });
 #pragma warning restore 612, 618
         }

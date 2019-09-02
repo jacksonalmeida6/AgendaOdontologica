@@ -14,11 +14,11 @@ namespace AgendaOdontologica.Controllers
 {
     public class DentistasController : Controller
     {
-        private readonly UserManager<Secretaria> _dentistaUsuarios;
-        private readonly SignInManager<Secretaria> _dentistaLogin;
+        private readonly UserManager<Dentista> _dentistaUsuarios;
+        private readonly SignInManager<Dentista> _dentistaLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
 
-        public DentistasController(UserManager<Secretaria> dentistaUsuarios, SignInManager<Secretaria> dentistaLogin, AgendaOdontologicaDbContext agendaOdontologica)
+        public DentistasController(UserManager<Dentista> dentistaUsuarios, SignInManager<Dentista> dentistaLogin, AgendaOdontologicaDbContext agendaOdontologica)
         {
             _dentistaUsuarios = dentistaUsuarios;
             _dentistaLogin = dentistaLogin;
@@ -30,7 +30,7 @@ namespace AgendaOdontologica.Controllers
             var Agendamento = _agendaOdontologica.Dentistas.ToList();
             foreach (var item in Agendamento)
             {
-                item.Es = _agendaOdontologica.Especializacaos.Find(item.EspecializacaoId);
+                item.Especializacao = _agendaOdontologica.Especializacaos.Find(item.EspecializacaoId);
             }
 
 

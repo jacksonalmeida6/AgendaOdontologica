@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AgendaOdontologica.Models
 {
-    public class Paciente 
+    public class Paciente
     {
         [Key]
         public int Id { get; set; }
