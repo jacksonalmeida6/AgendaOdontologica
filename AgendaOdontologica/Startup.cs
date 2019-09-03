@@ -38,8 +38,36 @@ namespace AgendaOdontologica
             services.AddDbContext<AgendaOdontologicaDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Conexao")));
-            services.AddDefaultIdentity<HomeLogin>()
+            //configurando o Identity
+            services.AddIdentity<HomeLogin,NivelAcesso>()
                 .AddEntityFrameworkStores<AgendaOdontologicaDbContext>();
+
+            // configurando senha e login para o Identity
+            services.Configure<IdentityOptions>(Opcoes =>
+            {
+                Opcoes.Password.RequireDigit = false;
+                Opcoes.Password.RequireLowercase = false;
+                Opcoes.Password.RequireNonAlphanumeric = false;
+                Opcoes.Password.RequireUppercase = false;
+                Opcoes.Password.RequiredLength = 6;
+                Opcoes.Password.RequiredUniqueChars = 1;
+
+            });
+
+            // injeção de Dependência
+            services.AddScoped<UserManager<HomeLogin>, UserManager<HomeLogin>>();
+            services.AddScoped<SignInManager<HomeLogin>, SignInManager<HomeLogin>>();
+            services.AddScoped<RoleManager<NivelAcesso>, RoleManager<NivelAcesso>>();
+
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = false;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

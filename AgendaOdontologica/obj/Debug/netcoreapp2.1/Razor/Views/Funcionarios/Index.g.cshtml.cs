@@ -69,7 +69,7 @@ using AgendaOdontologica.Models;
             WriteLiteral("\r\n<h2>Funcionarios</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(138, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b7a806debb71463083e4a011916d277f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf5986084c5a4fa7a9a027f40304a355", async() => {
                 BeginContext(161, 16, true);
                 WriteLiteral("Novo Funcionario");
                 EndContext();
@@ -299,7 +299,7 @@ using AgendaOdontologica.Models;
             WriteLiteral("\r\n            </td>\r\n            <td>\r\n                ");
             EndContext();
             BeginContext(2350, 79, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d46d581a879e43a490fa0b9e4a53e6b2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3dbbe2c1d176469e9ff1a07f1b42c2d4", async() => {
                 BeginContext(2419, 6, true);
                 WriteLiteral("Editar");
                 EndContext();
@@ -335,7 +335,7 @@ using AgendaOdontologica.Models;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(2447, 81, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "382c43cabf5d46d7b079992d6b6e16e2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eb77b02b90184343b85ea7e1a40f3a51", async() => {
                 BeginContext(2516, 8, true);
                 WriteLiteral("Detalhes");
                 EndContext();
@@ -371,7 +371,7 @@ using AgendaOdontologica.Models;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(2546, 81, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "20418b6556574f438ffd091b335a0bf5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4a96872b7ae143439936796437bd64e3", async() => {
                 BeginContext(2616, 7, true);
                 WriteLiteral("Deletar");
                 EndContext();

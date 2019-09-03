@@ -22,7 +22,7 @@ namespace AgendaOdontologica.Models
         public DateTime TempoAtemdimento { get; set; }
 
         [DisplayName("Nome Dentista")]
-        public Secretaria Dentista { get; set; }
+        public Dentista Dentista { get; set; }
         [DisplayName("Nome Paciente")]
         public Paciente Paciente { get; set; }
         [DisplayName("Nome Secretaria")]

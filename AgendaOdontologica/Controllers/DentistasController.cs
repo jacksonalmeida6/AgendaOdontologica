@@ -14,15 +14,18 @@ namespace AgendaOdontologica.Controllers
 {
     public class DentistasController : Controller
     {
-        private readonly UserManager<Dentista> _dentistaUsuarios;
-        private readonly SignInManager<Dentista> _dentistaLogin;
+        private readonly UserManager<HomeLogin> _dentistaUsuarios;
+        private readonly SignInManager<HomeLogin> _dentistaLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
+        private readonly RoleManager<NivelAcesso> _roleManager;
 
-        public DentistasController(UserManager<Dentista> dentistaUsuarios, SignInManager<Dentista> dentistaLogin, AgendaOdontologicaDbContext agendaOdontologica)
+        public DentistasController(UserManager<HomeLogin> dentistaUsuarios, SignInManager<HomeLogin> dentistaLogin,
+            AgendaOdontologicaDbContext agendaOdontologica, RoleManager<NivelAcesso> roleManager)
         {
             _dentistaUsuarios = dentistaUsuarios;
             _dentistaLogin = dentistaLogin;
             _agendaOdontologica = agendaOdontologica;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
@@ -79,12 +82,42 @@ namespace AgendaOdontologica.Controllers
         {
             try
             {
+                //validação de data de nascimento
+
                 ViewBag.dataNasc = dentista.DataNaci;
+              
                 if (ViewBag.dataNasc >= DateTime.Now)
                 {
                     return RedirectToAction(nameof(Error), new { mensagem = " Data de nascimento Invalida" });
                 }
-                _ = _agendaOdontologica.Dentistas.Add(dentista);
+                HomeLogin home = new HomeLogin
+                {
+                    Login = dentista.Login,
+                    PasswordHash = dentista.Senha,
+                    UserName = dentista.Login,
+             
+                };
+                NivelAcesso nivelAcesso = new NivelAcesso
+                {
+                    Name = "Adiministrador",
+                    Descricao ="Administrador do Sistema"
+                };
+                UsuariosRoles usuariosRoles = new UsuariosRoles
+                {
+                    HomeLoginId = home.Id,
+                    NivelAcessoId = nivelAcesso.Id
+
+                };
+
+                var UsuarioCriado = await _dentistaUsuarios.CreateAsync(home, home.Senha);
+               
+                if (UsuarioCriado.Succeeded  )
+                {
+                    await _dentistaLogin.SignInAsync(home, false);
+                }
+                await _dentistaUsuarios.AddToRoleAsync(home, usuariosRoles.NivelAcessoId);
+                await _roleManager.CreateAsync(nivelAcesso);
+                _ =  _agendaOdontologica.Dentistas.Add(dentista);
                 await _agendaOdontologica.SaveChangesAsync();
 
 
@@ -130,7 +163,7 @@ namespace AgendaOdontologica.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Secretaria dentista)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Dentista dentista)
         {
             if (id != dentista.Id)
             {

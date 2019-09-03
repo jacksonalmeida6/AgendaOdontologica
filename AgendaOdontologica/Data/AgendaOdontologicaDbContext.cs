@@ -14,8 +14,9 @@ namespace AgendaOdontologica.Data
         {
         }
 
+        public DbSet<NivelAcesso> NivelAcessos { get; set; }
         public DbSet<Dentista> Dentistas { get; set; }
-        public DbSet<Agendamento> Agendamentooes { get; set; }
+        public DbSet<Agendamento> Agendamentoes { get; set; }
         public DbSet<Especializacao> Especializacaos { get; set; }
         public DbSet<HomeLogin> HomeLogins { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }

@@ -15,7 +15,9 @@ namespace AgendaOdontologica.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Descricao = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -171,8 +173,8 @@ namespace AgendaOdontologica.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -216,8 +218,8 @@ namespace AgendaOdontologica.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -260,7 +262,7 @@ namespace AgendaOdontologica.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Agendamentooes",
+                name: "Agendamentoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -273,21 +275,21 @@ namespace AgendaOdontologica.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Agendamentooes", x => x.Id);
+                    table.PrimaryKey("PK_Agendamentoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Agendamentooes_Secretarias_DentistaId",
+                        name: "FK_Agendamentoes_Dentistas_DentistaId",
                         column: x => x.DentistaId,
-                        principalTable: "Secretarias",
+                        principalTable: "Dentistas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Agendamentooes_Pacientes_PacienteId",
+                        name: "FK_Agendamentoes_Pacientes_PacienteId",
                         column: x => x.PacienteId,
                         principalTable: "Pacientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Agendamentooes_Secretarias_SecretariaId",
+                        name: "FK_Agendamentoes_Secretarias_SecretariaId",
                         column: x => x.SecretariaId,
                         principalTable: "Secretarias",
                         principalColumn: "Id",
@@ -295,18 +297,18 @@ namespace AgendaOdontologica.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agendamentooes_DentistaId",
-                table: "Agendamentooes",
+                name: "IX_Agendamentoes_DentistaId",
+                table: "Agendamentoes",
                 column: "DentistaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agendamentooes_PacienteId",
-                table: "Agendamentooes",
+                name: "IX_Agendamentoes_PacienteId",
+                table: "Agendamentoes",
                 column: "PacienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agendamentooes_SecretariaId",
-                table: "Agendamentooes",
+                name: "IX_Agendamentoes_SecretariaId",
+                table: "Agendamentoes",
                 column: "SecretariaId");
 
             migrationBuilder.CreateIndex(
@@ -357,7 +359,7 @@ namespace AgendaOdontologica.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Agendamentooes");
+                name: "Agendamentoes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -375,16 +377,16 @@ namespace AgendaOdontologica.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Dentistas");
-
-            migrationBuilder.DropTable(
                 name: "Funcionarios");
 
             migrationBuilder.DropTable(
-                name: "Secretarias");
+                name: "Dentistas");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");
+
+            migrationBuilder.DropTable(
+                name: "Secretarias");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

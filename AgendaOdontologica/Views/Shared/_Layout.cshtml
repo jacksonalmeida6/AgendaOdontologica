@@ -30,13 +30,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+                    <li><a asp-area="" asp-controller="Dentistas" asp-action="index">Destistas</a></li>
+                    <li><a asp-area="" asp-controller="Funcionarios" asp-action="index">Funcionarios</a></li>
+                    <li><a asp-area="" asp-controller="Secretarias" asp-action="index">Secretarias</a></li>
+                    <li><a asp-area="" asp-controller="Agendamentoes" asp-action="index">Agendamentos</a></li>
+                    <li><a asp-area="" asp-controller="Especializacaos" asp-action="index">Especializacões</a></li>
+
+                    <li><a asp-area="" asp-controller="Pacientes" asp-action="index">Pacientes</a></li>
+
                 </ul>
-                <partial name="_LoginPartial" />
-            </div>
+                    <partial name="_LoginPartial" />
+</div>
         </div>
     </nav>
 

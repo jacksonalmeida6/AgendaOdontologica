@@ -12,14 +12,14 @@ namespace AgendaOdontologica.Controllers
 {
     public class PacientesController : Controller
     {
-        private readonly UserManager<Paciente> _pacienteUsuarios;
-        private readonly SignInManager<Paciente> _pacienteLogin;
+        //private readonly UserManager<Paciente> _pacienteUsuarios;
+        //private readonly SignInManager<Paciente> _pacienteLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
 
-        public PacientesController(UserManager<Paciente> pacienteUsuarios, SignInManager<Paciente> pacienteLogin, AgendaOdontologicaDbContext agendaOdontologica)
+        public PacientesController(/*UserManager<Paciente> pacienteUsuarios, SignInManager<Paciente> pacienteLogin,*/ AgendaOdontologicaDbContext agendaOdontologica)
         {
-            _pacienteUsuarios = pacienteUsuarios;
-            _pacienteLogin = pacienteLogin;
+            //_pacienteUsuarios = pacienteUsuarios;
+            //_pacienteLogin = pacienteLogin;
             _agendaOdontologica = agendaOdontologica;
         }
 

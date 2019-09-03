@@ -43,7 +43,7 @@ namespace AgendaOdontologica.Migrations
 
                     b.HasIndex("SecretariaId");
 
-                    b.ToTable("Agendamentooes");
+                    b.ToTable("Agendamentoes");
                 });
 
             modelBuilder.Entity("AgendaOdontologica.Models.Dentista", b =>
@@ -196,6 +196,9 @@ namespace AgendaOdontologica.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Name")
                         .HasMaxLength(256);
 
@@ -210,6 +213,8 @@ namespace AgendaOdontologica.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -310,11 +315,9 @@ namespace AgendaOdontologica.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -345,17 +348,26 @@ namespace AgendaOdontologica.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.NivelAcesso", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<string>("Descricao");
+
+                    b.ToTable("NivelAcesso");
+
+                    b.HasDiscriminator().HasValue("NivelAcesso");
                 });
 
             modelBuilder.Entity("AgendaOdontologica.Models.HomeLogin", b =>
@@ -373,7 +385,7 @@ namespace AgendaOdontologica.Migrations
 
             modelBuilder.Entity("AgendaOdontologica.Models.Agendamento", b =>
                 {
-                    b.HasOne("AgendaOdontologica.Models.Secretaria", "Dentista")
+                    b.HasOne("AgendaOdontologica.Models.Dentista", "Dentista")
                         .WithMany()
                         .HasForeignKey("DentistaId")
                         .OnDelete(DeleteBehavior.Cascade);

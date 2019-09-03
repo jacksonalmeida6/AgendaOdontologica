@@ -14,14 +14,14 @@ namespace AgendaOdontologica.Controllers
     {
        
       
-        private readonly UserManager<Secretaria> _secretariaUsuarios;
-        private readonly SignInManager<Secretaria> _secretariaLogin;
+        //private readonly UserManager<Secretaria> _secretariaUsuarios;
+        //private readonly SignInManager<Secretaria> _secretariaLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
 
-        public SecretariasController(UserManager<Secretaria> secretariaUsuarios, SignInManager<Secretaria> secretariaLogin, AgendaOdontologicaDbContext agendaOdontologica)
+        public SecretariasController(/*UserManager<Secretaria> secretariaUsuarios, SignInManager<Secretaria> secretariaLogin,*/ AgendaOdontologicaDbContext agendaOdontologica)
         {
-            _secretariaUsuarios = secretariaUsuarios;
-            _secretariaLogin = secretariaLogin;
+            //_secretariaUsuarios = secretariaUsuarios;
+            //_secretariaLogin = secretariaLogin;
             _agendaOdontologica = agendaOdontologica;
         }
 

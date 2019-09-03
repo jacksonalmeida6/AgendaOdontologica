@@ -10,7 +10,6 @@ namespace AgendaOdontologica.Models
 {
     public class Dentista
     {
-        [Key]
         public int Id { get; set; }
         public int EspecializacaoId { get; set; }
 
