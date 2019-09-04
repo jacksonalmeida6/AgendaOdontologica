@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
@@ -12,15 +13,18 @@ namespace AgendaOdontologica.Controllers
 {
     public class FuncionariosController : Controller
     {
-        //private readonly UserManager<Funcionario> _funcionarioUsuarios;
-        //private readonly SignInManager<Funcionario> _funcionarioLogin;
+        private readonly UserManager<HomeLogin> _funcionarioUsuarios;
+        private readonly SignInManager<HomeLogin> _funcionarioLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
+        private readonly RoleManager<NivelAcesso> _roleManager;
 
-        public FuncionariosController(/*UserManager<Funcionario> funcionarioUsuarios, SignInManager<Funcionario> funcionarioLogin,*/ AgendaOdontologicaDbContext agendaOdontologica)
+        public FuncionariosController(UserManager<HomeLogin> funcionarioUsuarios, SignInManager<HomeLogin> funcionarioLogin,
+            AgendaOdontologicaDbContext agendaOdontologica, RoleManager<NivelAcesso> roleManager)
         {
-            //_funcionarioUsuarios = funcionarioUsuarios;
-            //_funcionarioLogin = funcionarioLogin;
+            _funcionarioUsuarios = funcionarioUsuarios;
+            _funcionarioLogin = funcionarioLogin;
             _agendaOdontologica = agendaOdontologica;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
@@ -57,10 +61,45 @@ namespace AgendaOdontologica.Controllers
         // POST: Funcionarios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        //[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeFuncionario,Funcao,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Funcionario funcionario)
         {
+            try
+            {
+                //validação de data de nascimento
+
+                ViewBag.dataNasc = funcionario.DataNaci;
+
+                if (ViewBag.dataNasc >= DateTime.Now)
+                {
+                    return RedirectToAction(nameof(Error), new { mensagem = " Data de nascimento Invalida" });
+                }
+                HomeLogin home = new HomeLogin
+                {
+                    Login = funcionario.Login,
+                    Senha = funcionario.Senha,
+                    UserName = funcionario.Login,
+                    Nome = funcionario.NomeFuncionario
+                };
+
+                //cria um usuario no Identity
+                var UsuarioCriado = await _funcionarioUsuarios.CreateAsync(home, home.Senha);
+                //loga esse usuario no sistema
+                
+                //adiciona dentista
+                _ = _agendaOdontologica.Funcionarios.Add(funcionario);
+                await _agendaOdontologica.SaveChangesAsync();
+
+
+            }
+
+            catch (Exception e)
+            {
+                var ex = e.Message;
+
+            }
+            return RedirectToAction(nameof(Index));
             if (ModelState.IsValid)
             {
                 _agendaOdontologica.Add(funcionario);
@@ -87,9 +126,9 @@ namespace AgendaOdontologica.Controllers
             return View(funcionario);
         }
 
-        // POST: Funcionarios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         //POST: Funcionarios/Edit/5
+         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Administrador")]
@@ -142,7 +181,7 @@ namespace AgendaOdontologica.Controllers
             return View(funcionario);
         }
 
-        // POST: Funcionarios/Delete/5
+         //POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Administrador")]
@@ -157,6 +196,15 @@ namespace AgendaOdontologica.Controllers
         private bool FuncionarioExists(int id)
         {
             return _agendaOdontologica.Funcionarios.Any(e => e.Id == id);
+        }
+        public IActionResult Error(string mensagem)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Mensagem = mensagem,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
@@ -12,18 +13,23 @@ namespace AgendaOdontologica.Controllers
 {
     public class SecretariasController : Controller
     {
-       
-      
-        //private readonly UserManager<Secretaria> _secretariaUsuarios;
-        //private readonly SignInManager<Secretaria> _secretariaLogin;
-        private readonly AgendaOdontologicaDbContext _agendaOdontologica;
 
-        public SecretariasController(/*UserManager<Secretaria> secretariaUsuarios, SignInManager<Secretaria> secretariaLogin,*/ AgendaOdontologicaDbContext agendaOdontologica)
+
+        private readonly UserManager<HomeLogin> _secretariaUsuarios;// deixar como homeLogin
+        private readonly SignInManager<HomeLogin> _secretariaLogin;//deicxar como homeLogin
+        private readonly AgendaOdontologicaDbContext _agendaOdontologica;
+        private readonly RoleManager<NivelAcesso> _roleManager;// add esse ao contrutor
+
+        public SecretariasController(UserManager<HomeLogin> secretariaUsuarios, SignInManager<HomeLogin> secretariaLogin,
+            AgendaOdontologicaDbContext agendaOdontologica, RoleManager<NivelAcesso> roleManager)
         {
-            //_secretariaUsuarios = secretariaUsuarios;
-            //_secretariaLogin = secretariaLogin;
+            _secretariaUsuarios = secretariaUsuarios;
+            _secretariaLogin = secretariaLogin;
             _agendaOdontologica = agendaOdontologica;
+            _roleManager = roleManager;
         }
+
+
 
 
 
@@ -71,13 +77,43 @@ namespace AgendaOdontologica.Controllers
         //[Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,Nome,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Secretaria secretaria)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _agendaOdontologica.Add(secretaria);
+                //validação de data de nascimento
+
+                ViewBag.dataNasc = secretaria.DataNaci;
+
+                if (ViewBag.dataNasc >= DateTime.Now)
+                {
+                    return RedirectToAction(nameof(Error), new { mensagem = " Data de nascimento Invalida" });
+                }
+                HomeLogin home = new HomeLogin
+                {
+                    Login = secretaria.Login,
+                    Senha = secretaria.Senha,
+                    UserName = secretaria.Login,
+                    Nome = secretaria.Nome
+                };
+
+                //cria um usuario no Identity
+                var UsuarioCriado = await _secretariaUsuarios.CreateAsync(home, home.Senha);
+                
+                //adiciona dentista
+                _ = _agendaOdontologica.Secretarias.Add(secretaria);
                 await _agendaOdontologica.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+
             }
-            return View(secretaria);
+
+            catch (Exception e)
+            {
+                var ex = e.Message;
+
+            }
+            return RedirectToAction(nameof(Index));
+
+
+           
         }
 
         // GET: Secretarias/Edit/5
@@ -167,6 +203,15 @@ namespace AgendaOdontologica.Controllers
         private bool SecretariaExists(int id)
         {
             return _agendaOdontologica.Secretarias.Any(e => e.Id == id);
+        }
+        public IActionResult Error(string mensagem)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Mensagem = mensagem,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }

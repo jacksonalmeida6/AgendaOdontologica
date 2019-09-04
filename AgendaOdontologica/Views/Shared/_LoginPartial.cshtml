@@ -1,8 +1,9 @@
 @using Microsoft.AspNetCore.Identity
+    <div class="container">
+        @inject SignInManager<HomeLogin> SignInManager
+        @inject UserManager<HomeLogin> UserManager
 
-@inject SignInManager<HomeLogin> SignInManager
-@inject UserManager<HomeLogin> UserManager
-
+    </div>
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
@@ -11,7 +12,7 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+                <button type="submit" asp-controller="Home" asp-action="Logout" class="btn btn-link navbar-btn navbar-link">Logout</button>
             </li>
         </ul>
     </form>

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaOdontologica.Migrations
 {
     [DbContext(typeof(AgendaOdontologicaDbContext))]
-    [Migration("20190902191921_primeiraComIdentity")]
+    [Migration("20190904041711_primeiraComIdentity")]
     partial class primeiraComIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -377,6 +377,8 @@ namespace AgendaOdontologica.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("Login");
+
+                    b.Property<string>("Nome");
 
                     b.Property<string>("Senha");
 

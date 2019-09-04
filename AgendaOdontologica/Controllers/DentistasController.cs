@@ -14,6 +14,7 @@ namespace AgendaOdontologica.Controllers
 {
     public class DentistasController : Controller
     {
+        //add esse para add rolles
         private readonly UserManager<HomeLogin> _dentistaUsuarios;
         private readonly SignInManager<HomeLogin> _dentistaLogin;
         private readonly AgendaOdontologicaDbContext _agendaOdontologica;
@@ -85,7 +86,7 @@ namespace AgendaOdontologica.Controllers
                 //validação de data de nascimento
 
                 ViewBag.dataNasc = dentista.DataNaci;
-              
+
                 if (ViewBag.dataNasc >= DateTime.Now)
                 {
                     return RedirectToAction(nameof(Error), new { mensagem = " Data de nascimento Invalida" });
@@ -93,36 +94,22 @@ namespace AgendaOdontologica.Controllers
                 HomeLogin home = new HomeLogin
                 {
                     Login = dentista.Login,
-                    PasswordHash = dentista.Senha,
+                    Senha = dentista.Senha,
                     UserName = dentista.Login,
-             
+                    Nome= dentista.Nome,
+              
                 };
-                NivelAcesso nivelAcesso = new NivelAcesso
-                {
-                    Name = "Adiministrador",
-                    Descricao ="Administrador do Sistema"
-                };
-                UsuariosRoles usuariosRoles = new UsuariosRoles
-                {
-                    HomeLoginId = home.Id,
-                    NivelAcessoId = nivelAcesso.Id
-
-                };
-
-                var UsuarioCriado = await _dentistaUsuarios.CreateAsync(home, home.Senha);
                
-                if (UsuarioCriado.Succeeded  )
-                {
-                    await _dentistaLogin.SignInAsync(home, false);
-                }
-                await _dentistaUsuarios.AddToRoleAsync(home, usuariosRoles.NivelAcessoId);
-                await _roleManager.CreateAsync(nivelAcesso);
-                _ =  _agendaOdontologica.Dentistas.Add(dentista);
+                //cria um usuario no Identity
+                var UsuarioCriado = await _dentistaUsuarios.CreateAsync(home, home.Senha);
+                
+                //adiciona dentista
+                _ = _agendaOdontologica.Dentistas.Add(dentista);
                 await _agendaOdontologica.SaveChangesAsync();
-
-
-
+               
+                
             }
+                
             catch (Exception e)
             {
                 var ex = e.Message;

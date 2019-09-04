@@ -8,6 +8,7 @@ namespace AgendaOdontologica.Models
 {
     public class HomeLogin :  IdentityUser
     {
+        public string Nome { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
     }

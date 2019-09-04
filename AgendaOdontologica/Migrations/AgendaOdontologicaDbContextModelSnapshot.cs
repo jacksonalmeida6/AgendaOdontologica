@@ -376,6 +376,8 @@ namespace AgendaOdontologica.Migrations
 
                     b.Property<string>("Login");
 
+                    b.Property<string>("Nome");
+
                     b.Property<string>("Senha");
 
                     b.ToTable("HomeLogin");

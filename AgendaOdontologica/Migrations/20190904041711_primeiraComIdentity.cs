@@ -44,6 +44,7 @@ namespace AgendaOdontologica.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(nullable: true),
                     Login = table.Column<string>(nullable: true),
                     Senha = table.Column<string>(nullable: true)
                 },

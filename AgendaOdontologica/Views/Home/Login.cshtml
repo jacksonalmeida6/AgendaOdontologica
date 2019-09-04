@@ -1,6 +1,6 @@
 ﻿@model AgendaOdontologica.Models.HomeLogin
 @{
-    ViewData["Title"] = " Agenda Odontologica";
+    ViewData["Title"] = "Sistema Benner";
 
 }
 <html lang="pt-br">
@@ -14,8 +14,6 @@
     <form class="form-signin" asp-action="Login">
         <div class="checkbox mb-2">
             <h1 class="h3 mb-3 font-weight-normal">Faça login</h1>
-            <label class="control-label"></label>
-            <input class="form-control input-lg" asp-for="Nome" placeholder="Nome">
             <label class="control-label"></label>
             <input class="form-control input-lg" asp-for="Login" placeholder="Login">
             <label class="control-label"></label>
@@ -32,3 +30,7 @@
 
 
 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
