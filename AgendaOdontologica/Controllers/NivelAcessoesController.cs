@@ -12,12 +12,21 @@ namespace AgendaOdontologica.Controllers
 {
     public class NivelAcessoesController : Controller
     {
-        private readonly AgendaOdontologicaDbContext _context;
+        private readonly UserManager<HomeLogin> _dentistaUsuarios;
+        private readonly SignInManager<HomeLogin> _dentistaLogin;
+        private readonly AgendaOdontologicaDbContext _agendaOdontologica;
+        private readonly RoleManager<NivelAcesso> _roleManager;
 
-        public NivelAcessoesController(AgendaOdontologicaDbContext context)
+        public NivelAcessoesController(UserManager<HomeLogin> dentistaUsuarios, SignInManager<HomeLogin> dentistaLogin,
+            AgendaOdontologicaDbContext agendaOdontologica, RoleManager<NivelAcesso> roleManager)
         {
-            _context = context;
+            _dentistaUsuarios = dentistaUsuarios;
+            _dentistaLogin = dentistaLogin;
+            _agendaOdontologica = agendaOdontologica;
+            _roleManager = roleManager;
         }
+
+
 
         // GET: NivelAcessoes
         public async Task<IActionResult> Index()
