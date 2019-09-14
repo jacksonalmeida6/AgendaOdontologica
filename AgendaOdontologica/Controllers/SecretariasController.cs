@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +37,10 @@ namespace AgendaOdontologica.Controllers
 
 
         // GET: Secretarias
-        //[Authorize(Roles = "Administrador")]
-        //[Authorize(Roles = "Simples")]
+       
+        [Authorize(Roles = "Administrador,Simples")]
+       
+
         public async Task<IActionResult> Index()
         {
             return View(await _agendaOdontologica.Secretarias.ToListAsync());

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +27,14 @@ namespace AgendaOdontologica.Controllers
             _agendaOdontologica = agendaOdontologica;
             _roleManager = roleManager;
         }
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             return View(await _agendaOdontologica.Funcionarios.ToListAsync());
         }
 
         // GET: Funcionarios/Details/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,7 +53,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Funcionarios/Create
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -61,8 +62,9 @@ namespace AgendaOdontologica.Controllers
         // POST: Funcionarios/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,NomeFuncionario,Funcao,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Funcionario funcionario)
         {
             try
@@ -100,17 +102,11 @@ namespace AgendaOdontologica.Controllers
 
             }
             return RedirectToAction(nameof(Index));
-            if (ModelState.IsValid)
-            {
-                _agendaOdontologica.Add(funcionario);
-                await _agendaOdontologica.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(funcionario);
+            
         }
 
         // GET: Funcionarios/Edit/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -131,7 +127,7 @@ namespace AgendaOdontologica.Controllers
          //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFuncionario,Funcao,DataNaci,DataAdmissao,Login,Senha,CPF,Endereco,CEP,PIS")] Funcionario funcionario)
         {
             if (id != funcionario.Id)
@@ -163,7 +159,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Funcionarios/Delete/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -184,7 +180,7 @@ namespace AgendaOdontologica.Controllers
          //POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var funcionario = await _agendaOdontologica.Funcionarios.FindAsync(id);

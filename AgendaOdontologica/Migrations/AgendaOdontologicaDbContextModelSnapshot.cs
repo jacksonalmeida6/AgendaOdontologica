@@ -177,15 +177,32 @@ namespace AgendaOdontologica.Migrations
 
                     b.Property<string>("Login");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .IsRequired();
 
                     b.Property<string>("PIS");
 
-                    b.Property<string>("Senha");
+                    b.Property<string>("Senha")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
                     b.ToTable("Secretarias");
+                });
+
+            modelBuilder.Entity("AgendaOdontologica.Models.UsuariosRoles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("HomeLoginId");
+
+                    b.Property<string>("NivelAcessoId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsuariosRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

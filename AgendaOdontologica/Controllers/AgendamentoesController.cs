@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace AgendaOdontologica.Controllers
         {
             _agendaOdontologica = agendaOdontologica;
         }
-
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             var sistemaBennerContext = _agendaOdontologica.Agendamentoes.Include(a => a.Dentista).Include(a => a.Paciente).Include(a => a.Secretaria);
@@ -33,7 +34,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Agendamentoes/Details/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,7 +56,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Agendamentoes/Create
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewBag.PacienteNome = _agendaOdontologica.Pacientes.ToList();
@@ -79,49 +80,58 @@ namespace AgendaOdontologica.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([Bind("Id,HoraAtendimento,TempoAtemdimento,DentistaId,PacienteId,SecretariaId")] Agendamento agendamento)
         {
+
             try
             {
                 if (agendamento.HoraAtendimento < DateTime.Now)
                 {
                     return RedirectToAction(nameof(Error), new { mensagem = " Data de Agendamento não é valido !!!" });
                 }
-                if (_agendaOdontologica.Agendamentoes.All(x => x.Equals(agendamento)))
+                // colocar o dentista tbm
+                var a = _agendaOdontologica.Agendamentoes.FirstOrDefault(x => x.HoraAtendimento.Equals(agendamento.HoraAtendimento)&& x.DentistaId.Equals(agendamento.DentistaId));
+               if (a != null)
                 {
                     return RedirectToAction(nameof(Error), new { mensagem = " Este Agendamento já Existe !!!" });
                 }
-                if (_agendaOdontologica.Agendamentoes.All(a => a.DentistaId.Equals(agendamento.DentistaId) &&
-               a.HoraAtendimento.Equals(agendamento.HoraAtendimento) && a.PacienteId != agendamento.PacienteId))
+
+                var b = _agendaOdontologica.Agendamentoes.FirstOrDefault(c => c.DentistaId.Equals(agendamento.DentistaId) &&
+                c.HoraAtendimento.Equals(agendamento.HoraAtendimento) && c.PacienteId != agendamento.PacienteId);
+                // diferente de null
+                if (b != null)
                 {
                     return RedirectToAction(nameof(Error), new { mensagem = " Dentista vai atender outro paciente esse Horario !!!" });
                 }
 
+                ViewData["DentistaId"] = new SelectList(_agendaOdontologica.Dentistas, "Id", "Id", agendamento.DentistaId);
+                ViewData["PacienteId"] = new SelectList(_agendaOdontologica.Pacientes, "Id", "Id", agendamento.PacienteId);
+                ViewData["SecretariaId"] = new SelectList(_agendaOdontologica.Secretarias, "Id", "Id", agendamento.SecretariaId);
 
                 if (ModelState.IsValid)
                 {
                     _agendaOdontologica.Add(agendamento);
                     await _agendaOdontologica.SaveChangesAsync();
-
+                    return RedirectToAction(nameof(Index));
                 }
-                ViewData["DentistaId"] = new SelectList(_agendaOdontologica.Dentistas, "Id", "Id", agendamento.DentistaId);
-                ViewData["PacienteId"] = new SelectList(_agendaOdontologica.Pacientes, "Id", "Id", agendamento.PacienteId);
-                ViewData["SecretariaId"] = new SelectList(_agendaOdontologica.Secretarias, "Id", "Id", agendamento.SecretariaId);
-                return View(agendamento);
 
+
+
+               
             }
             catch (System.Exception e)
             {
 
                 var ex = e.Message;
             }
-            return RedirectToAction(nameof(Index));
-
+            return View(agendamento);
         }
 
+
+
         // GET: Agendamentoes/Edit/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -145,7 +155,7 @@ namespace AgendaOdontologica.Controllers
             ViewData["DentistaId"] = new SelectList(_agendaOdontologica.Dentistas, "Id", "Id", agendamento.DentistaId);
             ViewData["PacienteId"] = new SelectList(_agendaOdontologica.Pacientes, "Id", "Id", agendamento.PacienteId);
             ViewData["SecretariaId"] = new SelectList(_agendaOdontologica.Secretarias, "Id", "Id", agendamento.SecretariaId);
-            
+
             return View(agendamento);
         }
 
@@ -154,7 +164,7 @@ namespace AgendaOdontologica.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,HoraAtendimento,TempoAtemdimento,DentistaId,PacienteId,SecretariaId")] Agendamento agendamento)
         {
             if (id != agendamento.Id)
@@ -189,7 +199,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Agendamentoes/Delete/5
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -213,7 +223,7 @@ namespace AgendaOdontologica.Controllers
         // POST: Agendamentoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var agendamento = await _agendaOdontologica.Agendamentoes.FindAsync(id);

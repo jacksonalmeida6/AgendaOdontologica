@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
 using AgendaOdontologica.Servicos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace AgendaOdontologica.Controllers
             _agendaOdontologica = agendaOdontologica;
             _roleManager = roleManager;
         }
-
+        //[Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             var Agendamento = _agendaOdontologica.Dentistas.ToList();
@@ -93,6 +94,7 @@ namespace AgendaOdontologica.Controllers
                 }
                 HomeLogin home = new HomeLogin
                 {
+
                     Login = dentista.Login,
                     Senha = dentista.Senha,
                     UserName = dentista.Login,
@@ -126,6 +128,7 @@ namespace AgendaOdontologica.Controllers
         }
 
         // GET: Dentistas/Edit/5
+        //[Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             var especializacaos = _agendaOdontologica.Especializacaos.ToList();

@@ -12538,32 +12538,33 @@
   },
   "packageFolders": {
     "C:\\Users\\Jackson\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projetos\\AgendaOdontologica\\AgendaOdontologica\\AgendaOdontologica.csproj",
+      "projectUniqueName": "C:\\Users\\Jackson\\Desktop\\AgendaOdontologica2\\AgendaOdontologica\\AgendaOdontologica.csproj",
       "projectName": "AgendaOdontologica",
-      "projectPath": "C:\\Projetos\\AgendaOdontologica\\AgendaOdontologica\\AgendaOdontologica.csproj",
+      "projectPath": "C:\\Users\\Jackson\\Desktop\\AgendaOdontologica2\\AgendaOdontologica\\AgendaOdontologica.csproj",
       "packagesPath": "C:\\Users\\Jackson\\.nuget\\packages\\",
-      "outputPath": "C:\\Projetos\\AgendaOdontologica\\AgendaOdontologica\\obj\\",
+      "outputPath": "C:\\Users\\Jackson\\Desktop\\AgendaOdontologica2\\AgendaOdontologica\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
         "C:\\Users\\Jackson\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "\\\\mga-tc003\\PackagesServer_UtilitariosBenner": {},
+        "\\\\mga-tc008\\Nuget\\AG": {},
+        "\\\\mga-tc008\\Nuget\\Benner": {},
+        "http://desenv.benner.com.br/packages/nuget/": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -26,24 +26,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">AgendaOdontologica</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Agenda Odontologica</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Dentistas" asp-action="index">Destistas</a></li>
-                    <li><a asp-area="" asp-controller="Funcionarios" asp-action="index">Funcionarios</a></li>
-                    <li><a asp-area="" asp-controller="Secretarias" asp-action="index">Secretarias</a></li>
-                    <li><a asp-area="" asp-controller="Pacientes" asp-action="index">Pacientes</a></li>
 
-                    <li><a asp-area="" asp-controller="Agendamentoes" asp-action="index">Agendamentos</a></li>
-                    <li><a asp-area="" asp-controller="Especializacaos" asp-action="index">Especializacões</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="NovoNivelacesso">Nivelacesso</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="AssociarUsuariosAsRoles">UsuariosAsRoles</a></li>
+           
+            
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Dentistas" asp-action="index">Destistas</a></li>
+                        <li><a asp-area="" asp-controller="Funcionarios" asp-action="index">Funcionarios</a></li>
+                        <li><a asp-area="" asp-controller="Secretarias" asp-action="index">Secretarias</a></li>
+                        <li><a asp-area="" asp-controller="Pacientes" asp-action="index">Pacientes</a></li>
+                        <li><a asp-area="" asp-controller="Agendamentoes" asp-action="index">Agendamentos</a></li>
+                        <li><a asp-area="" asp-controller="Especializacaos" asp-action="index">Especializações</a></li>
+                        <li><a asp-area="" asp-controller="NivelAcessoes" asp-action="index">Nivel Acesso</a></li>
+                        <li><a asp-area="" asp-controller="UsuariosRoles" asp-action="index">Usuarios Roles</a></li>
 
 
-                </ul>
+                    </ul>
                     <partial name="_LoginPartial" />
-</div>
+                </div>
+           
+
         </div>
     </nav>
 

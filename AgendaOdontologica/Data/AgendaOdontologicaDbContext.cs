@@ -22,7 +22,7 @@ namespace AgendaOdontologica.Data
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Secretaria> Secretarias { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
-
+        public DbSet<AgendaOdontologica.Models.UsuariosRoles> UsuariosRoles { get; set; }
 
     }
 }

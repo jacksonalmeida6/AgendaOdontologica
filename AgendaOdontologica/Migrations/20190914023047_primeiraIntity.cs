@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AgendaOdontologica.Migrations
 {
-    public partial class primeiraComIdentity : Migration
+    public partial class primeiraIntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,11 +113,11 @@ namespace AgendaOdontologica.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(nullable: false),
                     DataNaci = table.Column<DateTime>(nullable: false),
                     DataAdmissao = table.Column<DateTime>(nullable: false),
                     Login = table.Column<string>(nullable: true),
-                    Senha = table.Column<string>(nullable: true),
+                    Senha = table.Column<string>(nullable: false),
                     CPF = table.Column<string>(nullable: true),
                     Endereco = table.Column<string>(nullable: true),
                     CEP = table.Column<int>(nullable: false),
@@ -126,6 +126,20 @@ namespace AgendaOdontologica.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Secretarias", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsuariosRoles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HomeLoginId = table.Column<string>(nullable: true),
+                    NivelAcessoId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsuariosRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -379,6 +393,9 @@ namespace AgendaOdontologica.Migrations
 
             migrationBuilder.DropTable(
                 name: "Funcionarios");
+
+            migrationBuilder.DropTable(
+                name: "UsuariosRoles");
 
             migrationBuilder.DropTable(
                 name: "Dentistas");

@@ -36,17 +36,11 @@ namespace AgendaOdontologica.Controllers
         
         public async Task<IActionResult> Login(HomeLogin homeLogin)
         {
-            var login = new HomeLogin
-            {
-                UserName = homeLogin.Login,
-                Nome = homeLogin.Nome,
-                Senha = homeLogin.Senha,
-                
-                
-            };
-            await _homeLoginIdentity.SignInAsync(login, false);
+           
+            var z = _agendaOdontologica.HomeLogins.FirstOrDefault(x => x.UserName.Equals(homeLogin.Login) && x.Senha.Equals(homeLogin.Senha));
+            await _homeLoginIdentity.SignInAsync(z, false);
 
-            return RedirectToAction("Idex", "Agendamentoes");
+            return RedirectToAction("Index", "Agendamentoes");
         }
         
         [HttpGet]
@@ -58,6 +52,9 @@ namespace AgendaOdontologica.Controllers
         [HttpPost]
         public async Task<IActionResult> NovoNivelacesso(NivelAcesso nivelAcesso)
         {
+
+
+
             if (ModelState.IsValid)
             {
 

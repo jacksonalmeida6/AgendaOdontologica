@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaOdontologica.Controllers
 {
+   
     public class EspecializacaosController : Controller
     {
         //private readonly UserManager<Especializacao> _especializacaoUsuarios;
@@ -26,8 +28,8 @@ namespace AgendaOdontologica.Controllers
 
 
         // GET: Especializacaos
+
         //[Authorize(Roles = "Administrador")]
-        //[Authorize(Roles = "Simples")]
         public async Task<IActionResult> Index()
         {
             return View(await _agendaOdontologica.Especializacaos.ToListAsync());
