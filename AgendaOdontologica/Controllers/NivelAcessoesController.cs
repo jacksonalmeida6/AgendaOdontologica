@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AgendaOdontologica.Data;
 using AgendaOdontologica.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AgendaOdontologica.Controllers
 {
@@ -31,7 +32,7 @@ namespace AgendaOdontologica.Controllers
         // GET: NivelAcessoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.NivelAcessos.ToListAsync());
+            return View(await _agendaOdontologica.NivelAcessos.ToListAsync());
         }
 
         // GET: NivelAcessoes/Details/5
@@ -42,7 +43,7 @@ namespace AgendaOdontologica.Controllers
                 return NotFound();
             }
 
-            var nivelAcesso = await _context.NivelAcessos
+            var nivelAcesso = await _agendaOdontologica.NivelAcessos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (nivelAcesso == null)
             {
@@ -55,8 +56,8 @@ namespace AgendaOdontologica.Controllers
         // GET: NivelAcessoes/Create
         public IActionResult Create()
         {
-            ViewData["NivelAcessoId"] = new SelectList(_context.NivelAcessos, "Id", "N");
-            ViewData["HomeLoginId"] = new SelectList(_context.HomeLogins, "Id", "Id");
+            ViewData["NivelAcessoId"] = new SelectList(_agendaOdontologica.NivelAcessos, "Id", "Name");
+            ViewData["HomeLoginId"] = new SelectList(_agendaOdontologica.HomeLogins, "Id", "Id");
             return View();
         }
 
@@ -69,8 +70,8 @@ namespace AgendaOdontologica.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(nivelAcesso);
-                await _context.SaveChangesAsync();
+                _agendaOdontologica.Add(nivelAcesso);
+                await _agendaOdontologica.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(nivelAcesso);
@@ -84,7 +85,7 @@ namespace AgendaOdontologica.Controllers
                 return NotFound();
             }
 
-            var nivelAcesso = await _context.NivelAcessos.FindAsync(id);
+            var nivelAcesso = await _agendaOdontologica.NivelAcessos.FindAsync(id);
             if (nivelAcesso == null)
             {
                 return NotFound();
@@ -108,8 +109,8 @@ namespace AgendaOdontologica.Controllers
             {
                 try
                 {
-                    _context.Update(nivelAcesso);
-                    await _context.SaveChangesAsync();
+                    _agendaOdontologica.Update(nivelAcesso);
+                    await _agendaOdontologica.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -135,7 +136,7 @@ namespace AgendaOdontologica.Controllers
                 return NotFound();
             }
 
-            var nivelAcesso = await _context.NivelAcessos
+            var nivelAcesso = await _agendaOdontologica.NivelAcessos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (nivelAcesso == null)
             {
@@ -150,15 +151,15 @@ namespace AgendaOdontologica.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var nivelAcesso = await _context.NivelAcessos.FindAsync(id);
-            _context.NivelAcessos.Remove(nivelAcesso);
-            await _context.SaveChangesAsync();
+            var nivelAcesso = await _agendaOdontologica.NivelAcessos.FindAsync(id);
+            _agendaOdontologica.NivelAcessos.Remove(nivelAcesso);
+            await _agendaOdontologica.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool NivelAcessoExists(string id)
         {
-            return _context.NivelAcessos.Any(e => e.Id == id);
+            return _agendaOdontologica.NivelAcessos.Any(e => e.Id == id);
         }
     }
 }
